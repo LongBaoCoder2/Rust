@@ -1,7 +1,10 @@
 #[allow(dead_code)]
-pub fn find_knight_tour(size_x: usize, size_y: usize, start_x: usize, start_y: usize)
-    -> Option<Vec<Vec<usize>>>
-{
+pub fn find_knight_tour(
+    size_x: usize,
+    size_y: usize,
+    start_x: usize,
+    start_y: usize,
+) -> Option<Vec<Vec<usize>>> {
     let mut knight_board = KnightTour::new(size_x, size_y);
 
     if !knight_board.is_valid(start_x as isize, start_y as isize) {
@@ -13,20 +16,15 @@ pub fn find_knight_tour(size_x: usize, size_y: usize, start_x: usize, start_y: u
         return Some(knight_board.board);
     }
     None
-
 }
-
-
 
 #[allow(dead_code)]
 struct KnightTour {
-    board: Vec<Vec<usize>>
+    board: Vec<Vec<usize>>,
 }
-
 
 #[allow(dead_code)]
 impl KnightTour {
-
     const MOVE: [(isize, isize); 8] = [
         (2, 1),
         (1, 2),
@@ -38,30 +36,26 @@ impl KnightTour {
         (2, -1),
     ];
 
-    pub fn new(size_x: usize, size_y : usize) -> Self {
+    pub fn new(size_x: usize, size_y: usize) -> Self {
         let board = vec![vec![0; size_x]; size_y];
-        Self {
-            board
-        }
+        Self { board }
     }
 
-    pub fn size_x(&self) -> usize { 
+    pub fn size_x(&self) -> usize {
         self.board.len()
     }
 
-
-    pub fn size_y(&self) -> usize { 
+    pub fn size_y(&self) -> usize {
         self.board[0].len()
     }
 
     pub fn is_valid(&self, x: isize, y: isize) -> bool {
-        x >= 0 &&
-        y >= 0 &&
-        x < self.size_x() as isize &&
-        y < self.size_y() as isize &&
-        self.board[x as usize][y as usize] == 0
+        x >= 0
+            && y >= 0
+            && x < self.size_x() as isize
+            && y < self.size_y() as isize
+            && self.board[x as usize][y as usize] == 0
     }
-
 
     pub fn solve_tour(&mut self, x: usize, y: usize, move_counts: usize) -> bool {
         if move_counts == self.size_x() * self.size_y() {
